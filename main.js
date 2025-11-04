@@ -723,5 +723,26 @@ function initFilters(){
   clearBtn.addEventListener('click', ()=> { searchInput.value=''; categoryFilter.value='all'; sortFilter.value='default'; apply();});
 }
 
+/* ---------- Mobile Menu ---------- */
+function initMobileMenu() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Close menu when clicking a link
+  const mobileLinks = mobileMenu.querySelectorAll('a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+  });
+}
+
 /* ---------- Start ---------- */
-initializeApp();
+document.addEventListener('DOMContentLoaded', () => {
+  initializeApp();
+  initMobileMenu();
+});
