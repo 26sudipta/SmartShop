@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SmartShop - Your Smart Online Store</title>
+
+    <!-- Tailwind (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- small tweak: allow dark toggling via class -->
+    <script>
+      tailwind.config = { darkMode: 'class' }
+    </script>
+  </head>
+  <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased">
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="sticky top-0 w-full bg-white dark:bg-gray-800 shadow z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center gap-4">
+            <h1 class="text-2xl font-bold text-blue-600 dark:text-blue-400">SmartShop</h1>
+            
+          </div>
+
+          <div class="hidden md:flex space-x-6">
+            <a href="#home" class="nav-link px-3 py-2 rounded-md transition">Home</a>
+            <a href="#products" class="nav-link px-3 py-2 rounded-md transition">Products</a>
+            <a href="#reviews" class="nav-link px-3 py-2 rounded-md transition">Reviews</a>
+            <a href="#contact" class="nav-link px-3 py-2 rounded-md transition">Contact</a>
+          </div>
+
+          <div class="flex items-center gap-4">
+
+            <button id="darkToggle" title="Toggle dark mode" class="hidden sm:inline-flex items-center px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-sm">🌙</button>
+
+            <div class="text-right">
+              <p class="text-xs text-gray-500 dark:text-gray-300">Balance</p>
+              <p id="userBalance" class="text-sm font-bold text-green-600 dark:text-green-400">1000 BDT</p>
+            </div>
+
+            <button id="cartToggle" class="relative p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+            </button>
+
+            
+
+            <button id="mobileMenuBtn" class="md:hidden p-2">☰</button>
+          </div>
+        </div>
+
+        <div id="mobileMenu" class="md:hidden hidden pb-4">
+          <a href="#home" class="block nav-link px-3 py-2">Home</a>
+          <a href="#products" class="block nav-link px-3 py-2">Products</a>
+          <a href="#reviews" class="block nav-link px-3 py-2">Reviews</a>
+          <a href="#contact" class="block nav-link px-3 py-2">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+
+      <!-- BANNER -->
+      <section id="home" class="relative overflow-hidden h-[50vh] sm:h-[60vh] md:h-96">
+        <div class="banner-container relative h-full">
+          <div id="bannerSlides" class="banner-slides relative h-full"></div>
+
+          <button id="prevBanner" class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800 p-2 sm:p-3 rounded-full shadow z-10 text-lg sm:text-xl hover:bg-white dark:hover:bg-gray-700 transition-colors">‹</button>
+          <button id="nextBanner" class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-800 p-2 sm:p-3 rounded-full shadow z-10 text-lg sm:text-xl hover:bg-white dark:hover:bg-gray-700 transition-colors">›</button>
+
+          <div id="bannerDots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10"></div>
+        </div>
+      </section>
+
+
+      <!-- PRODUCTS -->
+      <section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div class="text-center md:text-left">
+            <h2 class="text-3xl font-bold">Featured Products</h2>
+            <p class="text-gray-600 dark:text-gray-300">
+              <span>Browse products fetched from a public API</span>
+              <span id="productsCount" class="block text-sm mt-1 font-medium"></span>
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full md:w-auto">
+            <div class="flex gap-2 flex-wrap">
+              <input id="searchInput" type="search" placeholder="Search products..." class="flex-1 min-w-[200px] px-3 py-2 border rounded-md focus:outline-none" />
+              <select id="categoryFilter" class="w-full sm:w-auto px-3 py-2 border rounded-md">
+                <option value="all">All Categories</option>
+              </select>
+              <select id="sortFilter" class="w-full sm:w-auto px-3 py-2 border rounded-md">
+                <option value="default">Sort</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+              </select>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button id="clearFilters" class="flex-1 sm:flex-none px-3 py-2 bg-gray-200 rounded-md hover:bg-gray-300">Clear</button>
+              <button id="addMoneyBtn" class="flex-1 sm:flex-none px-3 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Add Money (+1000)</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="loadingProducts" class="text-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <p class="mt-4 text-gray-600 dark:text-gray-300">Loading products...</p>
+        </div>
+
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section id="reviews" class="bg-gray-100 dark:bg-gray-800 py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold">Customer Reviews</h2>
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300">What our customers say</p>
+          </div>
+
+          <div class="relative px-4 sm:px-0">
+            <div id="reviewsContainer" class="overflow-hidden mx-auto max-w-4xl">
+              <div id="reviewsSlider" class="flex transition-transform duration-500 ease-in-out"></div>
+            </div>
+            <button id="prevReview" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-700 p-2 sm:p-3 rounded-full shadow text-lg sm:text-xl hover:bg-gray-50">‹</button>
+            <button id="nextReview" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-700 p-2 sm:p-3 rounded-full shadow text-lg sm:text-xl hover:bg-gray-50">›</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="py-12">
+        <div class="max-w-3xl mx-auto px-4">
+          <div class="text-center mb-6">
+            <h2 class="text-3xl font-bold">Contact Us</h2>
+            <p class="text-gray-600 dark:text-gray-300">Have questions? Send us a message</p>
+          </div>
+
+          <form id="contactForm" class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-md shadow space-y-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Name</label>
+              <input id="contactName" required class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              <p id="nameError" class="text-red-500 text-sm hidden mt-1">Please enter your name</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Email</label>
+              <input id="contactEmail" type="email" required class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+              <p id="emailError" class="text-red-500 text-sm hidden mt-1">Please enter a valid email</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Message</label>
+              <textarea id="contactMessage" rows="4" required class="w-full px-3 py-2 border rounded-md bg-white dark:bg-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+              <p id="messageError" class="text-red-500 text-sm hidden mt-1">Please enter a message (min 10 chars)</p>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors">Send Message</button>
+
+            <div id="thankYouMessage" class="hidden p-4 mt-4 bg-green-50 text-green-700 rounded">Thank you — we received your message!</div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- CART SIDEBAR -->
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full sm:w-[380px] bg-white dark:bg-gray-800 shadow-2xl transform translate-x-full transition-all duration-300 ease-in-out z-50">
+      <div class="h-full flex flex-col">
+        <div class="p-4 sm:p-5 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex justify-between items-center">
+            <h2 class="text-xl sm:text-2xl font-bold flex items-center gap-2">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Shopping Cart
+            </h2>
+            <button id="closeCart" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>        <div class="flex-1 overflow-y-auto py-4 px-4 sm:px-5">
+          <div id="cartItems" class="space-y-4"></div>
+
+          <div id="emptyCart" class="flex flex-col items-center justify-center h-full py-8">
+            <svg class="w-16 h-16 text-gray-400 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p class="text-gray-500 dark:text-gray-400 text-lg">Your cart is empty</p>
+            <button onclick="closeCart()" class="mt-4 text-blue-600 hover:text-blue-700 font-medium">Continue Shopping</button>
+          </div>
+        </div>
+
+        <div id="cartSummary" class="hidden">
+          <div class="border-t border-gray-200 dark:border-gray-700">
+            <div class="p-4 sm:p-5 space-y-4">
+              <div class="space-y-2">
+                <div class="flex justify-between text-sm"><span>Subtotal</span><span id="subtotal">0 BDT</span></div>
+                <div class="flex justify-between text-sm"><span>Delivery</span><span id="deliveryCharge">50 BDT</span></div>
+                <div class="flex justify-between text-sm"><span>Shipping</span><span id="shippingCost">30 BDT</span></div>
+                <div class="flex justify-between text-sm text-green-600"><span>Discount</span><span id="discount">0 BDT</span></div>
+              </div>
+
+              <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <div class="flex justify-between font-bold">
+                  <span>Total</span>
+                  <span id="total" class="text-lg">0 BDT</span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex gap-2">
+                  <input id="couponInput" placeholder="Enter coupon (SMART10)" class="flex-1 px-3 py-2 border dark:border-gray-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <button id="applyCoupon" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md transition-colors">Apply</button>
+                </div>
+                <p id="couponMessage" class="text-sm hidden"></p>
+              </div>
+
+              <button id="checkoutBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors font-medium">
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 mt-12">
+      <!-- Main Footer Content -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- About Section -->
+          <div>
+            <h3 class="text-xl font-bold text-white mb-4">SmartShop</h3>
+            <p class="text-sm leading-relaxed">Your one-stop destination for smart shopping. We provide quality products at competitive prices with excellent customer service.</p>
+            <div class="mt-4 flex space-x-4">
+              <a href="#" class="hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+              <a href="#" class="hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
+              <a href="#" class="hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.222-.535.222l.192-2.748 5.004-4.518c.218-.196-.047-.304-.335-.108l-6.18 3.89-2.672-.882c-.58-.183-.594-.577.124-.852l10.437-4.02c.484-.176.908.112.752.854z"/></svg></a>
+              <a href="#" class="hover:text-white"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.995 16.885c-.69.113-1.393.162-2.096.162-2.583 0-5.004-1.027-6.845-2.867-.238-.238-.476-.475-.714-.713.238-.238.476-.476.714-.714 1.841-1.841 4.262-2.867 6.845-2.867.703 0 1.406.049 2.096.162C17.912 9.579 18 10.041 18 10.5c0 .459-.088.92-.169 1.379-.406 2.297-1.719 4.381-3.965 4.381s-3.559-2.084-3.965-4.381C9.088 11.421 9 10.959 9 10.5s.088-.921.169-1.379c.406-2.297 1.719-4.381 3.965-4.381s3.559 2.084 3.965 4.381c.081.458.169.92.169 1.379s-.088.921-.169 1.379c-.406 2.297-1.719 4.381-3.965 4.381s-3.559-2.084-3.965-4.381"/></svg></a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+              <li><a href="#products" class="hover:text-white transition-colors">Products</a></li>
+              <li><a href="#reviews" class="hover:text-white transition-colors">Reviews</a></li>
+              <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Info -->
+          <div>
+            <h3 class="text-xl font-bold text-white mb-4">Contact Us</h3>
+            <ul class="space-y-2">
+              <li class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>123 Shopping Street, Digital City</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                <span>support@smartshop.com</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span>+1 234 567 890</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Newsletter -->
+          <div>
+            <h3 class="text-xl font-bold text-white mb-4">Newsletter</h3>
+            <p class="text-sm mb-4">Subscribe to get updates on new products and special offers.</p>
+            <form class="flex gap-2">
+              <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 bg-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">Subscribe</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Footer -->
+      <div class="border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div class="md:flex md:items-center md:justify-between">
+            <div class="text-sm">
+              <p>&copy; 2025 SmartShop. All rights reserved.</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+              <ul class="flex space-x-6 text-sm">
+                <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- BACK TO TOP -->
+    <button id="backToTop" class="hidden fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-40">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+      </svg>
+    </button>
+
+    <script src="main.js"></script>
+  </body>
+</html>
